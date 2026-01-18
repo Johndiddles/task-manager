@@ -1,1 +1,5 @@
-spring.application.name=todo-v2
+spring:
+  application:
+    name: todo-v2
+server:
+  port: 4002

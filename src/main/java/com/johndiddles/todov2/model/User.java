@@ -1,27 +1,26 @@
 package com.johndiddles.todov2.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-@NoArgsConstructor
-@AllArgsConstructor
-public class UserModel {
+import java.util.UUID;
+
+@Entity
+@Setter
+@Getter
+@Table(name = "users")
+public class User {
     @Id
-    @GeneratedValue
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
-    @NotNull
-    @Email
     @Column(unique = true)
     private String email;
 
-    @NotNull
+    @Column(unique = true, nullable = false)
     private String username;
-    @NotNull
+
+    @Column(nullable = false)
     private String password;
 }
