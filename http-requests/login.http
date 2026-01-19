@@ -1,8 +1,7 @@
-POST http://localhost:4002/
+POST http://localhost:4002/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "Johndiddles1",
   "email": "john@email.com",
   "password": "Password@123"
 }

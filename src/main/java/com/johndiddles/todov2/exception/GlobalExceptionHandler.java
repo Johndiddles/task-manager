@@ -2,6 +2,7 @@ package com.johndiddles.todov2.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -38,4 +39,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errors);
     }
 
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<Map<String, String>> handleInvalidCredentialsException(
+            InvalidCredentialsException ex
+    ) {
+        log.error("Invalid credentials {}", ex.getMessage());
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", "Invalid credentials!");
+        errors.put("status", "failure");
+        errors.put("slug", "INVALID_CREDENTIALS");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errors);
+    }
 }

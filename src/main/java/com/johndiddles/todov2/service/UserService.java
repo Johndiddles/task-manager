@@ -9,6 +9,8 @@ import com.johndiddles.todov2.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     public UserRepository userRepository;
@@ -27,5 +29,9 @@ public class UserService {
         User user = userRepository.save(UserMapper.toUser(createUserRequestDto));
         System.out.println(user.getId() + " " + user.getEmail() + " " + user.getUsername());
         return UserMapper.toUserResponseDto(user);
+    }
+
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }
