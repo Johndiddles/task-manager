@@ -26,11 +26,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
-    public ResponseEntity<String>  index() {
-        return ResponseEntity.ok("Hello World");
-    }
-
     @PostMapping("/")
     @Operation(summary = "Create User")
     public ResponseEntity<UserResponseDto> createUser(

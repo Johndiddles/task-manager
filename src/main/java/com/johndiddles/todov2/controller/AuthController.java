@@ -7,6 +7,7 @@ import com.johndiddles.todov2.dto.UserResponseDto;
 import com.johndiddles.todov2.dto.validators.CreateUserValidationGroup;
 import com.johndiddles.todov2.service.AuthService;
 import com.johndiddles.todov2.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.groups.Default;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class AuthController {
         this.userService = userService;
     }
     @PostMapping("/login")
+    @Operation(summary = "User Login")
     public ResponseEntity<LoginResponseDto> login(
             @RequestBody LoginRequestDto loginDto
     ){
@@ -31,6 +33,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
+    @Operation(summary = "Signup")
     public ResponseEntity<LoginResponseDto> register(
             @Validated({Default.class, CreateUserValidationGroup.class})
             @RequestBody CreateUserRequestDto userRequestDto
@@ -47,6 +50,7 @@ public class AuthController {
     }
 
     @GetMapping("/verify")
+    @Operation(summary = "Verify Access Token")
     public ResponseEntity<Void> verifyToken(
             @RequestHeader("Authorization") String token
     ) {
