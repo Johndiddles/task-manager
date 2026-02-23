@@ -41,7 +41,6 @@ public class UserController {
     public ResponseEntity<UserResponseDto> getUser(
             @PathVariable String email
     ) {
-        System.out.println(email);
         Optional<User> user = userService.findByEmail(email);
         if (user.isPresent()) {
             UserResponseDto userResponseDto = UserMapper.toUserResponseDto(user.get());

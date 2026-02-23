@@ -30,7 +30,6 @@ public class UserService {
         String hashedPassword = passwordEncoder.passwordEncoder().encode(createUserRequestDto.getPassword());
         createUserRequestDto.setPassword(hashedPassword);
         User user = userRepository.save(UserMapper.toUser(createUserRequestDto));
-        System.out.println(user.getId() + " " + user.getEmail() + " " + user.getUsername());
         return UserMapper.toUserResponseDto(user);
     }
 
