@@ -6,25 +6,28 @@ import com.johndiddles.todov2.exception.EmailAlreadyExistsException;
 import com.johndiddles.todov2.mapper.UserMapper;
 import com.johndiddles.todov2.model.User;
 import com.johndiddles.todov2.repository.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.johndiddles.todov2.util.Encoder;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
+//@AllArgsConstructor
+//@RequiredArgsConstructor
 public class UserService {
     public UserRepository userRepository;
-    public PasswordEncoder passwordEncoder;
+    public Encoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, Encoder passwordEncoder){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
+
     public UserResponseDto createUser(CreateUserRequestDto createUserRequestDto) {
+
         if(userRepository.existsByEmail(createUserRequestDto.getEmail())) {
             throw new EmailAlreadyExistsException("Email already exists!");
         }
-        String hashedPassword = passwordEncoder.encode(createUserRequestDto.getPassword());
+        String hashedPassword = passwordEncoder.passwordEncoder().encode(createUserRequestDto.getPassword());
         createUserRequestDto.setPassword(hashedPassword);
         User user = userRepository.save(UserMapper.toUser(createUserRequestDto));
         System.out.println(user.getId() + " " + user.getEmail() + " " + user.getUsername());
@@ -34,4 +37,6 @@ public class UserService {
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+
 }

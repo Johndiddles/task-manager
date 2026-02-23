@@ -1,5 +1,7 @@
 package com.johndiddles.todov2.util;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -12,6 +14,9 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
 @Component
 public class JwtUtil {
@@ -21,18 +26,25 @@ public class JwtUtil {
         this.secretKey = Keys.hmacShaKeyFor(decodedKey);
     }
     public String generateToken(String email, String id) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("id", id);
+
         return Jwts.builder()
                 .subject(email)
-                .claim("id", id)
+                .claims()
+                .add(claims)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() * 1000 * 60 * 60 * 24))
+                .and()
                 .signWith(secretKey)
                 .compact();
     }
 
-    public void validateToken(String token) {
+    public Jws<Claims> validateToken(String token) {
+//        final String userName = extractUserName(token);
+//        return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
         try {
-            Jwts.parser().verifyWith((SecretKey) secretKey)
+            return Jwts.parser().verifyWith((SecretKey) secretKey)
                     .build()
                     .parseSignedClaims(token);
         } catch (SignatureException e) {
@@ -40,5 +52,22 @@ public class JwtUtil {
         } catch (JwtException e) {
             throw new JwtException("Invalid JWT token");
         }
+    }
+
+    public String extractEmail(String jwtToken) {
+        return extractClaim(jwtToken, Claims::getSubject);
+    }
+
+    private <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimResolver.apply(claims);
+    }
+
+    private Claims extractAllClaims(String token) {
+        return Jwts.parser()
+                .verifyWith((SecretKey) secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
 }

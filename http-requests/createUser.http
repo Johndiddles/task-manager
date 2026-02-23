@@ -1,8 +1,11 @@
-POST http://localhost:4002/
+POST http://localhost:4002/api/auth/register
 Content-Type: application/json
 
 {
-  "username": "Johndiddles1",
-  "email": "john@email.com",
+  "username": "Johndiddles204",
+  "email": "john204@email.com",
   "password": "Password@123"
 }
+
+
+> {% client.global.set("token", response.body.token) %}
