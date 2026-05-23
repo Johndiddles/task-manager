@@ -1,0 +1,13 @@
+POST http://localhost:4002/api/tasks/
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "A new task",
+  "description": "The description of a new task",
+  "priority": "HIGH",
+  "dueDate": "2026-05-28",
+  "assignee_id": "521cb416-00cf-46e8-993d-9d4c0e1970d9",
+  "status": "TODO"
+}
+
