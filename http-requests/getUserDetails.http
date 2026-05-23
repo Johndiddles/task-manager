@@ -1,2 +1,2 @@
-GET http://localhost:4002/api/user/john@email.com
+GET http://localhost:4002/api/user/profile/john205@email.com
 Authorization: Bearer {{token}}

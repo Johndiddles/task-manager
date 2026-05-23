@@ -1,4 +1,9 @@
 package com.johndiddles.todov2.model;
 
-public class TaskStatus {
+public enum TaskStatus {
+    TODO,
+    IN_PROGRESS,
+    COMPLETED,
+    CANCELED,
+    BLOCKED
 }

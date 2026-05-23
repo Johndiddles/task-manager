@@ -9,8 +9,11 @@ import com.johndiddles.todov2.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.groups.Default;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +39,21 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }
 
-    @GetMapping("/{email}")
+    @GetMapping("/profile")
+    @Operation(summary = "Get logged in user details")
+    public ResponseEntity<UserResponseDto> getLoggedInUser(
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        Optional<User> user = userService.findByUsername(userDetails.getUsername());
+
+            return user.map(value -> ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(UserMapper.toUserResponseDto(value)
+                    )
+            ).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+    }
+
+    @GetMapping("/profile/{email}")
     @Operation(summary = "Get user details")
     public ResponseEntity<UserResponseDto> getUser(
             @PathVariable String email
