@@ -3,3 +3,8 @@ spring:
     name: todo-v2
 server:
   port: 4002
+springdoc:
+  api-docs:
+    path: /docs
+  swagger-ui:
+    path: /docs/ui
