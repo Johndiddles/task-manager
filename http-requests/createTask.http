@@ -5,6 +5,7 @@ Authorization: Bearer {{token}}
 {
   "title": "Self Assigned task",
   "description": "The description of a self assigned task",
+  "assignee_id": "521cb416-00cf-46e8-993d-9d4c0e1970d9",
   "priority": "HIGH",
   "dueDate": "2026-05-28",
   "status": "TODO"
