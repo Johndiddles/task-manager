@@ -6,8 +6,6 @@ import com.johndiddles.todov2.dto.UserResponseDto;
 import com.johndiddles.todov2.model.Task;
 import com.johndiddles.todov2.model.User;
 
-import java.util.Optional;
-
 public class TaskMapper {
     public static Task toTask(CreateTaskRequestDto requestDto, User user, User assignee) {
         Task task = new Task();

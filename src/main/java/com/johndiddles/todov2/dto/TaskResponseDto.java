@@ -1,6 +1,5 @@
 package com.johndiddles.todov2.dto;
 
-import com.johndiddles.todov2.model.User;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,6 +1,5 @@
 package com.johndiddles.todov2.mapper;
 
-import com.johndiddles.todov2.dto.LoginRequestDto;
 import com.johndiddles.todov2.dto.LoginResponseDto;
 
 public class AuthMapper {
