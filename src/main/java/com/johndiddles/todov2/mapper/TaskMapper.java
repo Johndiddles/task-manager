@@ -2,21 +2,14 @@ package com.johndiddles.todov2.mapper;
 
 import com.johndiddles.todov2.dto.CreateTaskRequestDto;
 import com.johndiddles.todov2.dto.TaskResponseDto;
+import com.johndiddles.todov2.dto.UserResponseDto;
 import com.johndiddles.todov2.model.Task;
 import com.johndiddles.todov2.model.User;
 
 import java.util.Optional;
 
 public class TaskMapper {
-    public static Task toTask(CreateTaskRequestDto requestDto, User user) {
-        return getTask(requestDto, user, user);
-    }
-
     public static Task toTask(CreateTaskRequestDto requestDto, User user, User assignee) {
-        return getTask(requestDto, user, assignee);
-    }
-
-    private static Task getTask(CreateTaskRequestDto requestDto, User user, User assignee) {
         Task task = new Task();
 
         task.setTitle(requestDto.getTitle());
@@ -32,13 +25,16 @@ public class TaskMapper {
 
     public static TaskResponseDto toTaskResponseDto(Task task) {
         TaskResponseDto responseDto = new TaskResponseDto();
+        UserResponseDto user = UserMapper.toUserResponseDto(task.getAssignee());
+
+
         responseDto.setId(task.getId().toString());
         responseDto.setTitle(task.getTitle());
         responseDto.setDescription(task.getDescription());
         responseDto.setStatus(task.getStatus().toString());
         responseDto.setDueDate(task.getDueDate().toString());
         responseDto.setPriority(task.getPriority().toString());
-        responseDto.setAssignee(task.getAssignee().toString());
+        responseDto.setAssignee(user);
 
         return responseDto;
     }

@@ -1,5 +1,6 @@
 package com.johndiddles.todov2.dto;
 
+import com.johndiddles.todov2.model.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,5 +16,5 @@ public class TaskResponseDto {
     private String priority;
     private String dueDate;
     private List<String> tags;
-    private String assignee;
+    private UserResponseDto assignee;
 }
