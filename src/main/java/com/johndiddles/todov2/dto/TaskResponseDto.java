@@ -15,4 +15,5 @@ public class TaskResponseDto {
     private String priority;
     private String dueDate;
     private List<String> tags;
+    private String assignee;
 }

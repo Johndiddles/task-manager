@@ -5,8 +5,18 @@ import com.johndiddles.todov2.dto.TaskResponseDto;
 import com.johndiddles.todov2.model.Task;
 import com.johndiddles.todov2.model.User;
 
+import java.util.Optional;
+
 public class TaskMapper {
     public static Task toTask(CreateTaskRequestDto requestDto, User user) {
+        return getTask(requestDto, user, user);
+    }
+
+    public static Task toTask(CreateTaskRequestDto requestDto, User user, User assignee) {
+        return getTask(requestDto, user, assignee);
+    }
+
+    private static Task getTask(CreateTaskRequestDto requestDto, User user, User assignee) {
         Task task = new Task();
 
         task.setTitle(requestDto.getTitle());
@@ -14,11 +24,9 @@ public class TaskMapper {
         task.setDueDate(requestDto.getDueDate());
         task.setPriority(requestDto.getPriority());
         task.setCreatedBy(user);
-        task.setAssignee(user);
+        task.setAssignee(assignee);
         task.setStatus(requestDto.getStatus());
         task.setTags(requestDto.getTags());
-//        task.setSharedWith(requestDto.getTask_shares());
-
         return task;
     }
 
@@ -30,6 +38,7 @@ public class TaskMapper {
         responseDto.setStatus(task.getStatus().toString());
         responseDto.setDueDate(task.getDueDate().toString());
         responseDto.setPriority(task.getPriority().toString());
+        responseDto.setAssignee(task.getAssignee().toString());
 
         return responseDto;
     }

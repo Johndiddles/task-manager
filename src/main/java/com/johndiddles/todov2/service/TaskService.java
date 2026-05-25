@@ -10,6 +10,7 @@ import com.johndiddles.todov2.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -27,10 +28,21 @@ public class TaskService {
             CreateTaskRequestDto createTaskRequestDto,
             UserDetails userDetails
     ){
-        System.out.println("Got into the create task service");
+        Task task = new Task();
         User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
 
-        Task task = taskRepository.save(TaskMapper.toTask(createTaskRequestDto, user));
+        if(createTaskRequestDto.getAssignee_id() != null) {
+            User assignee = userRepository.findById(createTaskRequestDto.getAssignee_id()).orElseThrow();
+            task = taskRepository.save(TaskMapper.toTask(createTaskRequestDto, user, assignee));
+        } else {
+            task = taskRepository.save(TaskMapper.toTask(createTaskRequestDto, user, user));
+        }
+
         return TaskMapper.toTaskResponseDto(task);
+    }
+
+    public List<TaskResponseDto> getAllTasks() {
+        List<Task> tasks = taskRepository.findAll();
+        return tasks.stream().map(TaskMapper::toTaskResponseDto).toList();
     }
 }
