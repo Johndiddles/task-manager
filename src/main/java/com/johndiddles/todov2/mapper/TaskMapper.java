@@ -23,7 +23,8 @@ public class TaskMapper {
 
     public static TaskResponseDto toTaskResponseDto(Task task) {
         TaskResponseDto responseDto = new TaskResponseDto();
-        UserResponseDto user = UserMapper.toUserResponseDto(task.getAssignee());
+        UserResponseDto assignee = UserMapper.toUserResponseDto(task.getAssignee());
+        UserResponseDto createdBy = UserMapper.toUserResponseDto(task.getCreatedBy());
 
 
         responseDto.setId(task.getId().toString());
@@ -32,7 +33,8 @@ public class TaskMapper {
         responseDto.setStatus(task.getStatus().toString());
         responseDto.setDueDate(task.getDueDate().toString());
         responseDto.setPriority(task.getPriority().toString());
-        responseDto.setAssignee(user);
+        responseDto.setAssignee(assignee);
+        responseDto.setCreatedBy(createdBy);
 
         return responseDto;
     }

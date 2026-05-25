@@ -35,8 +35,10 @@ public class TaskController {
 
     @GetMapping("/")
     @Operation(summary = "Get all tasks")
-    public ResponseEntity<List<TaskResponseDto>> getTasks() {
-        List<TaskResponseDto> tasks = taskService.getAllTasks();
+    public ResponseEntity<List<TaskResponseDto>> getTasks(
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        List<TaskResponseDto> tasks = taskService.getAllTasks(userDetails);
         return ResponseEntity.ok(tasks);
     }
 }

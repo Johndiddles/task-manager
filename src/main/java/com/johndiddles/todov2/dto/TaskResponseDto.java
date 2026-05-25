@@ -16,4 +16,5 @@ public class TaskResponseDto {
     private String dueDate;
     private List<String> tags;
     private UserResponseDto assignee;
+    private UserResponseDto createdBy;
 }

@@ -40,8 +40,10 @@ public class TaskService {
         return TaskMapper.toTaskResponseDto(task);
     }
 
-    public List<TaskResponseDto> getAllTasks() {
-        List<Task> tasks = taskRepository.findAll();
+    public List<TaskResponseDto> getAllTasks(UserDetails userDetails) {
+        User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
+        List<Task> tasks = taskRepository.findByCreatedByOrAssignee(user, user);
+        System.out.println(tasks.toArray().length);
         return tasks.stream().map(TaskMapper::toTaskResponseDto).toList();
     }
 }
