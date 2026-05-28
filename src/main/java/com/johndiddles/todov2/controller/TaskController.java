@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -40,5 +41,15 @@ public class TaskController {
     ) {
         List<TaskResponseDto> tasks = taskService.getAllTasks(userDetails);
         return ResponseEntity.ok(tasks);
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Get single task by id")
+    public ResponseEntity<TaskResponseDto> getTaskById(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @PathVariable UUID id
+    ) {
+        TaskResponseDto task = taskService.getTask(userDetails, id);
+        return ResponseEntity.ok(task);
     }
 }

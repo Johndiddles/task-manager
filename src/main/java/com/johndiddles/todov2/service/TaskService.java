@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TaskService {
@@ -43,7 +44,13 @@ public class TaskService {
     public List<TaskResponseDto> getAllTasks(UserDetails userDetails) {
         User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
         List<Task> tasks = taskRepository.findByCreatedByOrAssignee(user, user);
-        System.out.println(tasks.toArray().length);
         return tasks.stream().map(TaskMapper::toTaskResponseDto).toList();
+    }
+
+    public TaskResponseDto getTask(UserDetails userDetails, UUID taskId) {
+        User user = userRepository.findByUsername(userDetails.getUsername()).orElseThrow();
+        Task task = taskRepository.findByIdAndCreatedByOrIdAndAssignee(taskId, user, taskId, user);
+
+        return TaskMapper.toTaskResponseDto(task);
     }
 }
