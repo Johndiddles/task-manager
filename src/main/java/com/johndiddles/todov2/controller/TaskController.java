@@ -2,6 +2,7 @@ package com.johndiddles.todov2.controller;
 
 import com.johndiddles.todov2.dto.CreateTaskRequestDto;
 import com.johndiddles.todov2.dto.TaskResponseDto;
+import com.johndiddles.todov2.dto.UpdateTaskRequestDto;
 import com.johndiddles.todov2.dto.validators.CreateTaskValidationGroup;
 import com.johndiddles.todov2.service.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,6 +51,16 @@ public class TaskController {
             @PathVariable UUID id
     ) {
         TaskResponseDto task = taskService.getTask(userDetails, id);
+        return ResponseEntity.ok(task);
+    }
+
+    @PatchMapping("/{id}")
+    @Operation(summary = "Update a task")
+    public ResponseEntity<TaskResponseDto> updateTask(
+            @PathVariable UUID id,
+            @RequestBody UpdateTaskRequestDto updateTaskRequestDto
+    ){
+        TaskResponseDto task = taskService.updateTask(id, updateTaskRequestDto);
         return ResponseEntity.ok(task);
     }
 }

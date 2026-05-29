@@ -1,13 +1,13 @@
-POST http://localhost:4002/api/tasks/
+PATCH http://localhost:4002/api/tasks/c45bb139-598a-4e94-9b9f-a0baf7d66678
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
   "title": "Task assigned to Johndiddles200",
   "description": "The description of a task assigned to Johndiddles200",
-  "assignee_id": "992d3816-0ab7-4f0e-92c8-37bb42fd428d",
-  "priority": "LOW",
+  "assignee_id": "4aec1c9a-f70d-42dc-a339-fa87eff5575a",
+  "priority": "MEDIUM",
   "dueDate": "2026-05-28",
-  "status": "TODO"
+  "status": "COMPLETED"
 }
 

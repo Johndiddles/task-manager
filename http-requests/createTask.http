@@ -5,7 +5,6 @@ Authorization: Bearer {{token}}
 {
   "title": "Task assigned to Johndiddles200",
   "description": "The description of a task assigned to Johndiddles200",
-  "assignee_id": "992d3816-0ab7-4f0e-92c8-37bb42fd428d",
   "priority": "LOW",
   "dueDate": "2026-05-28",
   "status": "TODO"

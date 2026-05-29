@@ -50,4 +50,16 @@ public class GlobalExceptionHandler {
         errors.put("slug", "INVALID_CREDENTIALS");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errors);
     }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleResourceNotFoundException(
+            ResourceNotFoundException ex
+    ) {
+        log.error("resource was not found {}", ex.getMessage());
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", ex.getMessage());
+        errors.put("status", "failure");
+        errors.put("slug", "RESOURCE_NOT_FOUND");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errors);
+    }
 }

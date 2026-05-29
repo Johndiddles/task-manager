@@ -1,4 +1,4 @@
 ### GET request to example server
-GET http://localhost:4002/api/tasks/b22ac623-baab-4d8b-9629-0928cf6fb4f9
+GET http://localhost:4002/api/tasks/c45bb139-598a-4e94-9b9f-a0baf7d66678
 Authorization: Bearer {{token}}
 ###
